@@ -1,0 +1,125 @@
+@font-face {
+    font-family: "iconfont"; /* Project id  */
+    src: url('iconfont.ttf?t=1679752548962') format('truetype');
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-nosignal:before {
+    content: "\e69e";
+}
+
+.icon-wifi:before {
+    content: "\e6a4";
+}
+
+.icon-Activity:before {
+    content: "\e601";
+}
+
+.icon-Arrow-LeftCircle:before {
+    content: "\e602";
+}
+
+.icon-AddUser:before {
+    content: "\e603";
+}
+
+.icon-Edit:before {
+    content: "\e606";
+}
+
+.icon-Heart:before {
+    content: "\e607";
+}
+
+.icon-Delete:before {
+    content: "\e608";
+}
+
+.icon-MoreCircle:before {
+    content: "\e60a";
+}
+
+.icon-TickSquare:before {
+    content: "\e60b";
+}
+
+.icon-Swap:before {
+    content: "\e60c";
+}
+
+.icon-Search:before {
+    content: "\e60d";
+}
+
+.icon-Profile:before {
+    content: "\e60e";
+}
+
+.icon-Arrow-DownSquare:before {
+    content: "\e61f";
+}
+
+.icon-AddUser1:before {
+    content: "\e620";
+}
+
+.icon-Arrow-LeftCircle1:before {
+    content: "\e621";
+}
+
+.icon-3User:before {
+    content: "\e622";
+}
+
+.icon-Chart:before {
+    content: "\e623";
+}
+
+.icon-Chat:before {
+    content: "\e624";
+}
+
+.icon-Delete1:before {
+    content: "\e625";
+}
+
+.icon-Document:before {
+    content: "\e626";
+}
+
+.icon-Calendar:before {
+    content: "\e627";
+}
+
+.icon-Image:before {
+    content: "\e628";
+}
+
+.icon-MoreCircle1:before {
+    content: "\e629";
+}
+
+.icon-Plus:before {
+    content: "\e62a";
+}
+
+.icon-MoreSquare:before {
+    content: "\e62b";
+}
+
+.icon-VolumeUp:before {
+    content: "\e62c";
+}
+
+.icon-kuandai:before {
+    content: "\e62d";
+}
+
