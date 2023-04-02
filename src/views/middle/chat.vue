@@ -1,18 +1,17 @@
 <template>
-  <div class="ws">
-    <p>{{ this.$store.state.message }}</p>
+  <div ref="scrollWrapper" class="ws" @scroll="scroll">
     <div v-for="(item,index) in this.$store.state.message" :key="index">
       <!-- 自己-->
-      <ul v-if="item.on" class="icon—myself">
+      <ul v-if="item.on && item.room_idently===$store.state.user.room_id" class="icon—myself">
         <li>{{ item.message }}</li>
         <li>
           <el-avatar :size="50" :src="squareUrl" shape="square"></el-avatar>
         </li>
       </ul>
-      <!--其他人-->
-      <ul v-else class="icon—other">
+
+      <ul v-if="item.idently===$store.state.user.userinfo.indently" class="icon—other">
         <li>
-          <el-avatar :size="size" :src="circleUrl"></el-avatar>
+          <el-avatar :size="50" :src="circleUrl"></el-avatar>
         </li>
         <li>{{ item.message }}</li>
       </ul>
@@ -23,11 +22,8 @@
 <script>
 export default {
   name: "chat",
-  // components: {HappyScroll} ,//在组件内注册,
   data() {
-    return {
-      socket: ""
-    }
+    return {}
   },
   methods: {
     async getinfo() {
@@ -41,6 +37,24 @@ export default {
         localStorage.setItem("indently", res.data.data.indently)
       } else {
       }
+    },
+    async getMessage() {
+      const {data: res} = await this.$axios({
+        method: "get",
+        url: "/user/get_message",
+        params: {
+          room_id: this.$store.state.user.room_id
+        }
+      })
+      console.log(res)
+    },
+    scroll(event) {
+      const el = event.target;
+      console.log(el)
+      if (this.$refs.scrollWrapper.scrollTop === 0) {
+        this.getMessage()
+      }
+      console.log(this.$refs.scrollWrapper.scrollTop)
     }
 
   },
@@ -50,19 +64,13 @@ export default {
       this.getinfo()
     }
   },
+  updated() {
+    this.$nextTick(() => {
+      // 将消息列表滚动到最底部
+      this.$refs.scrollWrapper.scrollTop = this.$refs.scrollWrapper.scrollHeight;
+    });
 
-  computed: {
-    reverseMessage() {
-      return this.$store.state.message.forEach((i, v) => {
-        console.log(i.idently === localStorage.getItem("indently"))
-        return i.indently === localStorage.getItem("indently")
-      })
-
-      // console.log(this.$store.state.message[0].idently,localStorage.getItem("indently"))
-      //  return this.$store.state.message[0].idently===localStorage.getItem("indently")
-    },
-  },
-
+  }
 
 }
 
@@ -70,16 +78,18 @@ export default {
 
 <style lang="less" scoped>
 .ws {
+  border: 0;
+  padding: 0;
+  margin: 0;
   overflow-y: scroll;
-  height: 65%;
+  height: 100%;
   width: 100%;
-  background-color: pink;
 }
 
 ::-webkit-scrollbar {
   width: 5px;
   height: 10px;
-  background-color: #F5F5F5;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .ws .icon—myself {
@@ -90,7 +100,6 @@ export default {
   align-items: center;
   width: 100%;
   min-height: 10%;
-  background-color: #fff;
   list-style: none;
 
 }

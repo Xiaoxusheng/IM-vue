@@ -82,8 +82,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-
-
 }
 
 .fade-in-linear .actives {
@@ -119,13 +117,12 @@ export default {
 .fade-in-linear .actives .arrow-middle {
   width: 67%;
   height: 100%;
-  /*background-color: yellowgreen;*/
 }
 
 .fade-in-linear .actives .arrow-middle .icon-Chats {
+  border-left: #bebbbb 1px solid;
   width: 100%;
   height: 65%;
-  background-color: #fff;
 }
 
 .fade-in-linear .actives .arrow-right {

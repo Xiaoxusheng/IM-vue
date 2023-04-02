@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script src="../src/assets/font_kyz1xooni39/iconfont.js"></script>
+<script src="../src/assets/font_sl3lmg4aoba/iconfont.js"></script>
 <style lang="less">
 #app {
   margin: 0;

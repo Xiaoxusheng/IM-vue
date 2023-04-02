@@ -4,7 +4,7 @@
     <!-- 好友列表   -->
     <!-- 你的内容 -->
     <div ref="chatContainer" class="frist">
-      <div v-for="(item,index) in friends" :key="item.Indently" class="icon_lists" @click="check(index)">
+      <div v-for="(item,index) in friends" :key="item.Indently" ref="friends" class="icon_lists" @click="check(index)">
           <span class="imgs">
             <el-avatar :size="size" :src="squareUrl" shape="square"></el-avatar>
           </span>
@@ -12,7 +12,10 @@
             {{ item.userinfo.username }}
           </span>
         <span>
-          </span>
+           <svg aria-hidden="true" class="icon">
+          <use xlink:href="#icon-zaixianzhuangtai"></use>
+          </svg>
+        </span>
       </div>
     </div>
 
@@ -39,16 +42,27 @@ export default {
       console.log(res)
       if (res.code === 200) {
         this.friends = res.data.data
+      } else {
+        this.$message({
+          type: "error",
+          message: res.msg
+        })
       }
     },
     check(e) {
       this.$store.commit('getUsername', (this.friends[e]))
       this.$router.push({
-        name: "home",
+        name: "chat",
         params: {
-          username: e
+          id: e
         }
       })
+      for (let i = 0; i < this.friends.length; i++) {
+        this.$refs.friends[i].style.background = ""
+        this.$refs.friends[i].style.color = "#333333"
+      }
+      this.$refs.friends[e].style.background = "#c08552"
+      this.$refs.friends[e].style.color = "#fff"
     },
   },
   created() {
@@ -61,7 +75,11 @@ export default {
 <style lang="less" scoped>
 
 /*!* 滑动条轨道 *!*/
-/*::-webkit-scrollbar { width: 10px; height: 10px; background-color: #F5F5F5; }*/
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: #F5F5F5;
+}
 
 /*!*!* 滑动条滑块 *!*!*/
 /*!*.scrollbar-vertical::-webkit-scrollbar-thumb {*!*/
@@ -134,6 +152,10 @@ export default {
   height: 100%;
   font-size: 16px;
   /*font-family: "sans-serif";*/
+}
+
+.el-listfrien .frist .icon_lists:hover {
+  background-color: #1f0318;
 }
 
 </style>

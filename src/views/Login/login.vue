@@ -111,7 +111,7 @@ export default {
           localStorage.removeItem('username')
           localStorage.removeItem('password')
         }
-        this.$router.replace("/home")
+        this.$router.replace("/home/chat/0")
       } else {
         this.$message({
           message: res.msg,

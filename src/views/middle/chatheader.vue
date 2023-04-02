@@ -1,10 +1,13 @@
 <template>
   <div class="chat-header">
     <div class="username">
-      <h5>{{ this.$store.state.user.userinfo.username }}</h5>
-      <svg aria-hidden="true" class="icon">
-        <use xlink:href="#icon-nosignal"></use>
-      </svg>
+      <h5>
+        {{ this.$store.state.user === "" ? this.$store.state.username : this.$store.state.user.userinfo.username }}</h5>
+      <div v-show="this.online">
+        <svg aria-hidden="true" class="icon">
+          <use xlink:href="#icon-zaixianzhuangtai"></use>
+        </svg>
+      </div>
     </div>
 
     <div class="icon-pictur">
@@ -17,13 +20,34 @@
 </template>
 
 <script>
+
 export default {
   name: "chatheader",
   data() {
     return {
-      username: "小米"
+      username: "小米",
+      online: false
+    }
+  },
+  methods: {
+    async getonline() {
+      const {data: res} = await this.$axios({
+        method: "get",
+        url: "/user/online",
+        params: {
+          account: this.$store.state.user.userinfo.account
+        }
+
+      })
+      this.online = !!res.status;
+    }
+  },
+  updated() {
+    if (this.$store.state.user !== "") {
+      this.getonline()
     }
   }
+
 }
 </script>
 
@@ -56,9 +80,8 @@ export default {
 
 .chat-header .username .icon {
   margin-left: 20px;
-  /*background-color: #fff;*/
-  height: 30px;
-  width: 30px;
+  height: 10px;
+  width: 10px;
 }
 
 .chat-header .icon-pictur {

@@ -1,0 +1,219 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2693604",
+      "name": "在线状态",
+      "font_class": "zaixianzhuangtai",
+      "unicode": "e681",
+      "unicode_decimal": 59009
+    },
+    {
+      "icon_id": "15302322",
+      "name": "在线状态-在线",
+      "font_class": "zaixianzhuangtai-zaixian",
+      "unicode": "e787",
+      "unicode_decimal": 59271
+    },
+    {
+      "icon_id": "15302323",
+      "name": "在线状态-离线",
+      "font_class": "zaixianzhuangtai-lixian",
+      "unicode": "e788",
+      "unicode_decimal": 59272
+    },
+    {
+      "icon_id": "16812931",
+      "name": "在线状态",
+      "font_class": "offonline",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "19029949",
+      "name": "Activity",
+      "font_class": "Activity",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "19029961",
+      "name": "Arrow - Left Circle",
+      "font_class": "Arrow-LeftCircle",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "19029964",
+      "name": "Add User",
+      "font_class": "AddUser",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "19029980",
+      "name": "Edit",
+      "font_class": "Edit",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "19029983",
+      "name": "Heart",
+      "font_class": "Heart",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "19030001",
+      "name": "Delete",
+      "font_class": "Delete",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "19030006",
+      "name": "More Circle",
+      "font_class": "MoreCircle",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "19030013",
+      "name": "Tick Square",
+      "font_class": "TickSquare",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "19030021",
+      "name": "Search",
+      "font_class": "Search",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "19030031",
+      "name": "Profile",
+      "font_class": "Profile",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "19030158",
+      "name": "Arrow - Down Square",
+      "font_class": "Arrow-DownSquare",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "19030159",
+      "name": "Add User",
+      "font_class": "AddUser1",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "19030162",
+      "name": "Arrow - Left Circle",
+      "font_class": "Arrow-LeftCircle1",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "19030167",
+      "name": "3 User",
+      "font_class": "3User",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "19030184",
+      "name": "Chart",
+      "font_class": "Chart",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "19030189",
+      "name": "Chat",
+      "font_class": "Chat",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "19030190",
+      "name": "Delete",
+      "font_class": "Delete1",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "19030191",
+      "name": "Document",
+      "font_class": "Document",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "19030193",
+      "name": "Calendar",
+      "font_class": "Calendar",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "19030206",
+      "name": "Image",
+      "font_class": "Image",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "19030212",
+      "name": "More Circle",
+      "font_class": "MoreCircle1",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "19030220",
+      "name": "Plus",
+      "font_class": "Plus",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "19030233",
+      "name": "More Square",
+      "font_class": "MoreSquare",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "19030248",
+      "name": "Volume Up",
+      "font_class": "VolumeUp",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "24473008",
+      "name": "表情包",
+      "font_class": "biaoqingbao",
+      "unicode": "fc68",
+      "unicode_decimal": 64616
+    },
+    {
+      "icon_id": "26797002",
+      "name": "表情包",
+      "font_class": "biaoqingbao1",
+      "unicode": "10036",
+      "unicode_decimal": 65590
+    }
+  ]
+}

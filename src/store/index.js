@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        user: "小米",
+        user: "",
+        username: "小米",
         input: "",
         myinfo: "",
         message: [],
@@ -16,6 +17,7 @@ export default new Vuex.Store({
         //获取用户名
         getUsername(state, use) {
             state.user = use
+            console.log(use)
         },
 
         //接收消息

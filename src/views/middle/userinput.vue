@@ -2,13 +2,15 @@
   <div class="user-input">
     <div class="change-list">
     <span class="icon_1">
-      <svg aria-hidden="true" class="icon">
-      <use xlink:href="#icon-Plus"></use>
-     </svg>
+       <el-tooltip class="item" content=" 发送图片" effect="dark" placement="top-start">
+        <svg aria-hidden="true" class="icon" @click="senimg">
+        <use xlink:href="#icon-Plus"></use>
+        </svg>
+    </el-tooltip>
     </span>
       <span class="icon_1">
       <svg aria-hidden="true" class="icon">
-      <use xlink:href="#icon-Plus"></use>
+      <use xlink:href="#icon-biaoqingbao"></use>
       </svg></span>
       <span class="icon_1">
       <svg aria-hidden="true" class="icon">
@@ -29,6 +31,8 @@
 </template>
 
 <script>
+
+import axios from "axios";
 
 export default {
   name: "input",
@@ -60,7 +64,7 @@ export default {
           "message": this.message,
           "room_type": this.$store.state.user.room_type
         }))
-        console.log("123")
+
         this.message = ""
       } else {
         this.$message({
@@ -82,12 +86,37 @@ export default {
       this.ws.onmessage = (event) => {
         if (event.data) {
           this.$store.commit("getMessage", JSON.parse(event.data))
+          console.log(event.data)
         }
 
       };
       this.ws.onclose = (event => {
         console.log("close");
       })
+
+    },
+    senimg() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.style.display = 'none';
+      input.addEventListener('change', async () => {
+        const file = input.files[0];
+        if (file) {
+          const formData = new FormData();
+          formData.append('file', file);
+          // 使用axios或fetch等库发送文件上传请求
+          const {data: res} = await axios({
+            method: "post",
+            url: "/user/file",
+            data: formData,
+          })
+          console.log(res)
+          console.log('文件上传成功');
+        }
+      });
+      document.body.appendChild(input);
+      input.click();
+      document.body.removeChild(input);
 
     }
   },
