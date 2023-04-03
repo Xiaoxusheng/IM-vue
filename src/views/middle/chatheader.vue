@@ -11,9 +11,18 @@
     </div>
 
     <div class="icon-pictur">
-      <svg aria-hidden="true" class="icon">
-        <use xlink:href="#icon-MoreSquare"></use>
-      </svg>
+      <el-dropdown placement="top" trigger="hover" @command="handleCommand">
+        <svg aria-hidden="true" class="icon">
+          <use xlink:href="#icon-MoreSquare"></use>
+        </svg>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="SetPicture">设置头像</el-dropdown-item>
+          <el-dropdown-item command="a">狮子头</el-dropdown-item>
+          <el-dropdown-item command="a">螺蛳粉</el-dropdown-item>
+          <el-dropdown-item command="a">双皮奶</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+
     </div>
 
   </div>
@@ -40,6 +49,12 @@ export default {
 
       })
       this.online = !!res.status;
+    },
+    handleCommand(e) {
+      console.log(e)
+      if (e === "SetPicture") {
+        this.$router.push("/userinfo")
+      }
     }
   },
   updated() {
@@ -97,4 +112,5 @@ export default {
   width: 30px;
   /*background-color: #fff;*/
 }
+
 </style>

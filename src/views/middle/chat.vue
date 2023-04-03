@@ -1,17 +1,18 @@
 <template>
   <div ref="scrollWrapper" class="ws" @scroll="scroll">
     <div v-for="(item,index) in this.$store.state.message" :key="index">
+      <p>{{ $store.state.myinfo.userinfo }}</p>
       <!-- 自己-->
       <ul v-if="item.on && item.room_idently===$store.state.user.room_id" class="icon—myself">
         <li>{{ item.message }}</li>
         <li>
-          <el-avatar :size="50" :src="squareUrl" shape="square"></el-avatar>
+          <el-avatar :src="$store.state.myinfo" shape="square"></el-avatar>
         </li>
       </ul>
 
       <ul v-if="item.idently===$store.state.user.userinfo.indently" class="icon—other">
         <li>
-          <el-avatar :size="50" :src="circleUrl"></el-avatar>
+          <el-avatar :size="50" :src="$store.state.user.userinfo.headpicture"></el-avatar>
         </li>
         <li>{{ item.message }}</li>
       </ul>
@@ -33,8 +34,9 @@ export default {
       })
       console.log(res)
       if (res.code === 200) {
-        this.$store.commit("getinfo", (res.data))
+        // this.$store.commit("getinfo", (res.data.data))
         localStorage.setItem("indently", res.data.data.indently)
+        localStorage.setItem("headpicture", res.data.data.headpicture)
       } else {
       }
     },
@@ -124,7 +126,6 @@ export default {
   align-items: center;
   width: 100%;
   min-height: 10%;
-  background-color: #fff;
   list-style: none;
 
 }

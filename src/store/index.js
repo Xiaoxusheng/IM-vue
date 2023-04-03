@@ -8,7 +8,7 @@ export default new Vuex.Store({
         user: "",
         username: "小米",
         input: "",
-        myinfo: "",
+        myinfo: localStorage.getItem("headpicture"),
         message: [],
         on: ""
     },

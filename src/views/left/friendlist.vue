@@ -6,17 +6,19 @@
     <div ref="chatContainer" class="frist">
       <div v-for="(item,index) in friends" :key="item.Indently" ref="friends" class="icon_lists" @click="check(index)">
           <span class="imgs">
-            <el-avatar :size="size" :src="squareUrl" shape="square"></el-avatar>
+            <el-avatar :src="item.userinfo.headpicture" class="img" shape="square"></el-avatar>
           </span>
         <span>
             {{ item.userinfo.username }}
           </span>
+
         <span>
            <svg aria-hidden="true" class="icon">
           <use xlink:href="#icon-zaixianzhuangtai"></use>
           </svg>
         </span>
       </div>
+
     </div>
 
   </div>
@@ -54,7 +56,7 @@ export default {
       this.$router.push({
         name: "chat",
         params: {
-          id: e
+          username: this.friends[e].userinfo.username
         }
       })
       for (let i = 0; i < this.friends.length; i++) {
@@ -67,7 +69,8 @@ export default {
   },
   created() {
     this.getuserinfo()
-  }
+  },
+
 }
 
 </script>
@@ -125,20 +128,31 @@ export default {
 }
 
 .el-listfrien .frist .icon_lists {
-  padding: 0;
-  margin: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
   display: flex;
   align-items: center;
   justify-content: flex-start;
   height: 10%;
-  /*width: 100% !important;*/
   background-color: #fff;
   list-style: none;
 }
 
 .el-listfrien .frist .icon_lists .imgs {
+
   width: 130px;
   height: 40px;
+}
+
+.el-listfrien .frist .icon_lists .imgs .img {
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  background-color: #fff;
+}
+
+.el-listfrien .frist .icon_lists .imgs .img img {
+  width: 100%;
+  height: 100%;
 }
 
 .el-listfrien .frist .icon_lists span {
@@ -152,6 +166,11 @@ export default {
   height: 100%;
   font-size: 16px;
   /*font-family: "sans-serif";*/
+}
+
+.el-listfrien .frist .icon_lists span image {
+  width: 100%;
+  height: 100%;
 }
 
 .el-listfrien .frist .icon_lists:hover {
