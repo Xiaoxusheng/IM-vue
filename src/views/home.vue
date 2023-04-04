@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       x: 0,
-      color: "#409EFF",
+      color: "rgba(255, 255, 255, 0)",
 
     }
   },
@@ -99,12 +99,6 @@ export default {
 
 }
 
-.fade-in-linear .actives .movearea {
-  width: 100%;
-  height: 10%;
-  border-radius: 10px;
-
-}
 
 .fade-in-linear .actives .arrow-left {
   width: 30%;

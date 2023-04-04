@@ -100,7 +100,6 @@ export default {
 }
 
 .chat-header .icon-pictur {
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,7 +109,6 @@ export default {
 .chat-header .icon-pictur .icon {
   height: 30px;
   width: 30px;
-  /*background-color: #fff;*/
 }
 
 </style>

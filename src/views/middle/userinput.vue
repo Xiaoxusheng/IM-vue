@@ -64,7 +64,6 @@ export default {
           "message": this.message,
           "room_type": this.$store.state.user.room_type
         }))
-
         this.message = ""
       } else {
         this.$message({

@@ -61,10 +61,10 @@ export default {
       })
       for (let i = 0; i < this.friends.length; i++) {
         this.$refs.friends[i].style.background = ""
-        this.$refs.friends[i].style.color = "#333333"
+        this.$refs.friends[i].style.color = ""
       }
       this.$refs.friends[e].style.background = "#c08552"
-      this.$refs.friends[e].style.color = "#fff"
+      this.$refs.friends[e].style.color = "#ffffff"
     },
   },
   created() {
@@ -175,6 +175,7 @@ export default {
 
 .el-listfrien .frist .icon_lists:hover {
   background-color: #1f0318;
+  color: #ffffff;
 }
 
 </style>
