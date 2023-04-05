@@ -4,6 +4,7 @@ import Login from '../views/Login/login.vue'
 import Home from "@/views/home";
 import chat from "@/views/middle/chat";
 import userinfo from "@/components/userinfo";
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -37,6 +38,7 @@ const routes = [
         path: "/userinfo",
         component: userinfo,
         name: "userinfo",
+
     }
 
     // {
@@ -64,16 +66,29 @@ const token = localStorage.getItem("token")
 
 //路由权限控制
 router.beforeEach((to, from, next) => {
-    if (to.path === "/home") {
+    // console.log(to.path.includes("/home/chat"))
+    store.state.isLoading = true
+
+    if (to.path.includes("/home/chat")) {
         if (token) {
-            next()
+            setTimeout(() => {
+                next()
+            }, 400)
         } else {
             next("/login")
         }
     } else {
-        next()
+        setTimeout(() => {
+            next()
+        }, 500)
     }
 })
 
+
+router.afterEach((to, from) => {
+    // 在路由切换后隐藏loading动画
+    // ...
+    store.state.isLoading = false
+})
 
 export default router

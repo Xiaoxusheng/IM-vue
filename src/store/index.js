@@ -10,7 +10,15 @@ export default new Vuex.Store({
         input: "",
         myinfo: localStorage.getItem("headpicture"),
         message: [],
-        on: ""
+        friends: [],
+        on: "",
+        isLoading: false,
+        title: {
+            show: false,
+            message: "",
+            backgroundColor: "#333"
+        },
+        ws: ""
     },
     getters: {},
     mutations: {
@@ -27,11 +35,19 @@ export default new Vuex.Store({
                 i.on = i.idently === localStorage.getItem("indently")
             })
         },
+        //获取好友列表
+        getfriends(state, friends) {
+            state.friends = friends
+        },
 
         getinfo(state, my) {
             state.myinfo = my
+        },
+        getws(state, ws) {
+            state.ws = ws
         }
     },
     actions: {},
     modules: {}
 })
+

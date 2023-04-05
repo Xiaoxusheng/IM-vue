@@ -44,6 +44,7 @@ export default {
       console.log(res)
       if (res.code === 200) {
         this.friends = res.data.data
+        this.$store.commit("getfriends", res.data.data)
       } else {
         this.$message({
           type: "error",

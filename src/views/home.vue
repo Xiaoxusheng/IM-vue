@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       x: 0,
-      color: "rgba(255, 255, 255, 0)",
+      color: "#409EFF",
 
     }
   },

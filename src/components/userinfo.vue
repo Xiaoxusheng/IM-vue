@@ -17,14 +17,18 @@
         </span>
       </div>
       <!--  内容   -->
-      <div class="box-card-content">
+      <div class="box-card-content" @copy="copy">
         <ul class="base-info-content-show">
           <li>
             <div class="title">基本信息</div>
           </li>
           <li>
             <div class="content-show-l">账号</div>
-            <div class="content-show-l">{{ userinfo.data.account }}</div>
+            <div class="content-show-l">{{ userinfo.data.account }}
+              <svg aria-hidden="true" class="icon" @click="copys">
+                <use xlink:href="#icon-Activity"></use>
+              </svg>
+            </div>
           </li>
           <li>
             <div class="content-show-l">用户名</div>
@@ -107,7 +111,34 @@ export default {
         }
       }
       input.click();
+    },
+    copy(e) {
+      e.preventDefault();
+      e.clipboardData.setData("text", "不准复制")
+      this.$notify({
+        type: "error",
+        message: "不准复制！靓仔",
+        title: "不准复制"
+      })
+    },
+    copys(e) {
+      navigator.clipboard.writeText(this.userinfo.data.account)
+          .then(() => {
+            this.$notify({
+              type: "success",
+              message: "复制成功！",
+              title: "复制"
+            })
+          })
+          .catch(() => {
+            this.$notify({
+              type: "error",
+              message: "复制失败！",
+              title: "不准复制"
+            })
+          })
     }
+
   },
   created() {
     this.getinfo()

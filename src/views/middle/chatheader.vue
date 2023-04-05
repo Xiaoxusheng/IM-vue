@@ -30,6 +30,7 @@
 
 <script>
 
+
 export default {
   name: "chatheader",
   data() {
@@ -46,7 +47,6 @@ export default {
         params: {
           account: this.$store.state.user.userinfo.account
         }
-
       })
       this.online = !!res.status;
     },

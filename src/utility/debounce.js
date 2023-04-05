@@ -1,11 +1,9 @@
-export default {
-    debounce(fn, delay) {
-        let timer = null;
-        return function () {
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                fn.apply(this, arguments);
-            }, delay);
-        };
-    }
+module.exports.debounce = (fn, delay) => {
+    let timer = null;
+    return function () {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            fn.apply(this, arguments);
+        }, delay);
+    };
 }

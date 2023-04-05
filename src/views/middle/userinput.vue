@@ -3,7 +3,7 @@
     <div class="change-list">
     <span class="icon_1">
        <el-tooltip class="item" content=" 发送图片" effect="dark" placement="top-start">
-        <svg aria-hidden="true" class="icon" @click="senimg">
+        <svg aria-hidden="true" class="icon" @click="setimg">
         <use xlink:href="#icon-Plus"></use>
         </svg>
     </el-tooltip>
@@ -44,8 +44,9 @@ export default {
     }
   },
   created() {
-    this.connect()
+
   },
+
   methods: {
     sendmessage() {
       if (this.ws.readyState === 1) {
@@ -66,9 +67,10 @@ export default {
         }))
         this.message = ""
       } else {
-        this.$message({
+        this.$notify({
           type: "error",
-          message: "连接失败！重新连接！"
+          message: "连接失败！重新连接！",
+          title: "失败"
         })
       }
       console.log(this.ws.readyState)
@@ -76,8 +78,14 @@ export default {
     connect() {
       // 创建ws
       this.ws = new WebSocket('ws://127.0.0.1:8080/user/websocket?token=' + `${localStorage.getItem("token")}`);
+      this.$store.commit("getws", this.ws)
       this.ws.onopen = () => {
         console.log('WebSocket连接成功');
+        this.$notify({
+          title: '成功',
+          message: '连接成功',
+          type: 'success',
+        });
       }
       this.ws.onerror = (event) => {
         console.log(event);
@@ -90,11 +98,12 @@ export default {
 
       };
       this.ws.onclose = (event => {
+        setTimeout(this.connect, 1000); // 1秒后重连
         console.log("close");
       })
 
     },
-    senimg() {
+    setimg() {
       const input = document.createElement('input');
       input.type = 'file';
       input.style.display = 'none';
@@ -117,10 +126,15 @@ export default {
       input.click();
       document.body.removeChild(input);
 
-    }
+    },
+
   },
   mounted() {
-
+    console.log(this.$store.state.ws.readyState)
+    if (this.$store.state.ws.readyState === 1) {
+      return
+    }
+    this.connect()
   },
 }
 </script>

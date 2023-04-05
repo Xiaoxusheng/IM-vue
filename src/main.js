@@ -5,15 +5,23 @@ import store from './store'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from "axios";
+import font from "./assets/font_sl3lmg4aoba/iconfont"
 
 //使用Element
 Vue.use(ElementUI);
 // Vue.prototype.$ws=new WebSocket("ws://localhost:8080")
-
+Vue.use(font)
 
 Vue.config.productionTip = false
 
 Vue.prototype.$axios = axios
+
+const ws = new WebSocket('ws://127.0.0.1:8080/user/websocket?token=' + `${localStorage.getItem("token")}`);
+
+ws.onopen = () => {
+    console.log('WebSocket连接成功');
+
+}
 
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
