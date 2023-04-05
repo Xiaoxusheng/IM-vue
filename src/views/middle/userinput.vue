@@ -49,7 +49,7 @@ export default {
 
   methods: {
     sendmessage() {
-      if (this.ws.readyState === 1) {
+      if (this.ws.readyState === 1 || this.$store.state.ws.readyState === 1) {
         console.log(this.$store.state.user.room_id,)
         if (!this.$store.state.user.room_id) {
           this.$message({
@@ -59,12 +59,23 @@ export default {
           return
         }
         //发送消息
-        this.ws.send(JSON.stringify({
-          "idently": localStorage.getItem("indently"),
-          "room_idently": this.$store.state.user.room_id,
-          "message": this.message,
-          "room_type": this.$store.state.user.room_type
-        }))
+        if (this.ws.readyState === 1) {
+          this.ws.send(JSON.stringify({
+            "idently": localStorage.getItem("indently"),
+            "room_idently": this.$store.state.user.room_id,
+            "message": this.message,
+            "room_type": this.$store.state.user.room_type
+          }))
+        }
+        console.log(this.ws.readyState === undefined)
+        if (this.ws.readyState === undefined && this.$store.state.ws.readyState === 1) {
+          this.$store.state.ws.send(JSON.stringify({
+            "idently": localStorage.getItem("indently"),
+            "room_idently": this.$store.state.user.room_id,
+            "message": this.message,
+            "room_type": this.$store.state.user.room_type
+          }))
+        }
         this.message = ""
       } else {
         this.$notify({
@@ -73,7 +84,6 @@ export default {
           title: "失败"
         })
       }
-      console.log(this.ws.readyState)
     },
     connect() {
       // 创建ws
@@ -88,6 +98,7 @@ export default {
         });
       }
       this.ws.onerror = (event) => {
+        setTimeout(this.connect, 1000); // 1秒后重连
         console.log(event);
       }
       this.ws.onmessage = (event) => {
@@ -101,7 +112,6 @@ export default {
         setTimeout(this.connect, 1000); // 1秒后重连
         console.log("close");
       })
-
     },
     setimg() {
       const input = document.createElement('input');

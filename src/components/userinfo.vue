@@ -114,7 +114,7 @@ export default {
     },
     copy(e) {
       e.preventDefault();
-      e.clipboardData.setData("text", "不准复制")
+      e.clipboardData.setData("text/plain", "不准复制")
       this.$notify({
         type: "error",
         message: "不准复制！靓仔",
