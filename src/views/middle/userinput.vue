@@ -32,7 +32,6 @@
 
 <script>
 
-import axios from "axios";
 
 export default {
   name: "input",
@@ -64,7 +63,8 @@ export default {
             "idently": localStorage.getItem("indently"),
             "room_idently": this.$store.state.user.room_id,
             "message": this.message,
-            "room_type": this.$store.state.user.room_type
+            "room_type": this.$store.state.user.room_type,
+            "message_type": "text"
           }))
         }
         console.log(this.ws.readyState === undefined)
@@ -73,7 +73,8 @@ export default {
             "idently": localStorage.getItem("indently"),
             "room_idently": this.$store.state.user.room_id,
             "message": this.message,
-            "room_type": this.$store.state.user.room_type
+            "room_type": this.$store.state.user.room_type,
+            "message_type": "text"
           }))
         }
         this.message = ""
@@ -95,6 +96,7 @@ export default {
           title: '成功',
           message: '连接成功',
           type: 'success',
+          count: 0
         });
       }
       this.ws.onerror = (event) => {
@@ -109,27 +111,66 @@ export default {
 
       };
       this.ws.onclose = (event => {
+        this.count++;
+        //重连超过3次，返回
+        if (this.count > 3) {
+          return
+        }
         setTimeout(this.connect, 1000); // 1秒后重连
         console.log("close");
       })
     },
+    //发送图片
     setimg() {
       const input = document.createElement('input');
       input.type = 'file';
       input.style.display = 'none';
       input.addEventListener('change', async () => {
         const file = input.files[0];
+        const fileName = file.name; // 获取文件名
+        const fileExtension = fileName.split('.').pop(); // 获取文件后缀
         if (file) {
+          let Picturename = ""
+          for (let i = 0; i < 6; i++) {
+            Picturename += Math.floor(Math.random() * 10)
+          }
           const formData = new FormData();
-          formData.append('file', file);
+          formData.append('file', file, Picturename + "." + fileExtension);
           // 使用axios或fetch等库发送文件上传请求
-          const {data: res} = await axios({
+          const {data: res} = await this.$axios({
             method: "post",
             url: "/user/file",
             data: formData,
           })
-          console.log(res)
+          console.log(res.code)
           console.log('文件上传成功');
+          if (res.code === 200) {
+            if (!this.$store.state.user.room_id) {
+              this.$message({
+                type: "error",
+                message: "选择好友！"
+              })
+              return
+            }
+            if (this.ws.readyState === 1) {
+              this.ws.send(JSON.stringify({
+                "idently": localStorage.getItem("indently"),
+                "room_idently": this.$store.state.user.room_id,
+                "message": res.url,
+                "room_type": this.$store.state.user.room_type,
+                "message_type": "picture"
+              }))
+            }
+            if (this.ws.readyState === undefined && this.$store.state.ws.readyState === 1) {
+              this.$store.state.ws.send(JSON.stringify({
+                "idently": localStorage.getItem("indently"),
+                "room_idently": this.$store.state.user.room_id,
+                "message": res.url,
+                "room_type": this.$store.state.user.room_type,
+                "message_type": "picture"
+              }))
+            }
+          }
         }
       });
       document.body.appendChild(input);

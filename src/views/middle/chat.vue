@@ -4,17 +4,19 @@
       <p>{{ $store.state.myinfo.userinfo }}</p>
       <!-- 自己-->
       <ul v-if="item.on && item.room_idently===$store.state.user.room_id" class="icon—myself">
-        <li>{{ item.message }}</li>
+        <li v-if="item.message_type==='picture'" class="chat-img"><img :src="item.message" alt=""></li>
+        <li v-else>{{ item.message }}</li>
         <li>
           <el-avatar :src="$store.state.myinfo" shape="square"></el-avatar>
         </li>
       </ul>
-
+      <!--其他人-->
       <ul v-if="item.idently===$store.state.user.userinfo.indently" class="icon—other">
         <li>
           <el-avatar :size="50" :src="$store.state.user.userinfo.headpicture"></el-avatar>
         </li>
-        <li>{{ item.message }}</li>
+        <li v-if="item.message_type==='picture'" class="chat-img"><img :src="item.message" alt=""></li>
+        <li v-else>{{ item.message }}</li>
       </ul>
     </div>
   </div>
@@ -112,6 +114,22 @@ export default {
   width: auto;
 }
 
+.ws .icon—myself .chat-img {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10vw;
+  height: 20vh;
+  border-radius: 10px;
+  border: #333333 1px solid;
+}
+
+.ws .icon—myself .chat-img img {
+  max-width: 100%;
+  height: 100%;
+}
+
 .ws .icon—myself li:nth-child(1) {
   background-color: #333;
   color: #fffdef;
@@ -134,6 +152,22 @@ export default {
   height: 100%;
   padding: 20px;
   width: auto;
+}
+
+.ws .icon—other .chat-img {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10vw;
+  height: 20vh;
+  border-radius: 20px;
+  border: #333333 1px solid;
+}
+
+.ws .icon—other .chat-img img {
+  max-width: 100%;
+  height: 100%;
 }
 
 .ws .icon—other li:nth-child(2) {
