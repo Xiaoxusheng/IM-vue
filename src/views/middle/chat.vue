@@ -1,7 +1,7 @@
 <template>
-  <div ref="scrollWrapper" class="ws" @scroll="scroll">
-    <div v-for="(item,index) in this.$store.state.message" :key="index">
-      <p>{{ $store.state.myinfo.userinfo }}</p>
+  <div ref="scrollWrapper" class="ws" @scroll="scroll" @wheel="handleWheel">
+    <div v-for="(item,index) in this.$store.state.message" :key="item.message_id">
+      <p>{{ scolltop }}</p>
       <!-- 自己-->
       <ul v-if="item.on && item.room_idently===$store.state.user.room_id" class="icon—myself">
         <li v-if="item.message_type==='picture'" class="chat-img"><img :src="item.message" alt=""></li>
@@ -26,7 +26,10 @@
 export default {
   name: "chat",
   data() {
-    return {}
+    return {
+      scolltop: 0,
+      lastViewedMessageId: null
+    }
   },
   methods: {
     async getinfo() {
@@ -42,23 +45,48 @@ export default {
       } else {
       }
     },
+    //获取聊天信息
     async getMessage() {
+      if (!this.$store.state.user.room_id) {
+        return
+      }
       const {data: res} = await this.$axios({
         method: "get",
         url: "/user/get_message",
         params: {
-          room_id: this.$store.state.user.room_id
+          room_id: this.$store.state.user.room_id,
+          pageSize: this.$store.state.count
         }
       })
+      res.data.data.reverse()
       console.log(res)
+      if (res.code === 200) {
+        this.$store.commit("addMessage", res.data.data)
+      }
     },
     scroll(event) {
       const el = event.target;
-      console.log(el)
+      console.log(this.$refs.scrollWrapper.scrollTop)
       if (this.$refs.scrollWrapper.scrollTop === 0) {
         this.getMessage()
+        this.$store.commit("getcount")
+        const lastViewedMessage = chatContainer.querySelector(`[data-message-id="${this.lastViewedMessageId}"]`);
+        if (lastViewedMessage) {
+          chatContainer.scrollTop = lastViewedMessage.offsetTop;
+        }
       }
-      console.log(this.$refs.scrollWrapper.scrollTop)
+
+
+    },
+    handleWheel(e) {
+      if (e.deltaY < 0 && this.$refs.scrollWrapper.scrollTop === 0) {
+        console.log('鼠标向上滑动')
+
+
+      }
+      if (e.deltaY > 0) {
+        console.log('鼠标向下滑动', this.$refs.scrollWrapper.scrollHeight)
+      }
     }
 
   },
@@ -72,8 +100,8 @@ export default {
     this.$nextTick(() => {
       // 将消息列表滚动到最底部
       this.$refs.scrollWrapper.scrollTop = this.$refs.scrollWrapper.scrollHeight;
-    });
 
+    });
   }
 
 }
@@ -94,6 +122,11 @@ export default {
   width: 5px;
   height: 10px;
   background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #fff;
+
 }
 
 .ws .icon—myself {
@@ -120,7 +153,9 @@ export default {
   align-items: center;
   justify-content: center;
   width: 10vw;
+  max-width: 20vm;
   height: 20vh;
+  max-height: 30vh;
   border-radius: 10px;
   border: #333333 1px solid;
 }
@@ -128,6 +163,7 @@ export default {
 .ws .icon—myself .chat-img img {
   max-width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .ws .icon—myself li:nth-child(1) {
@@ -168,6 +204,7 @@ export default {
 .ws .icon—other .chat-img img {
   max-width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .ws .icon—other li:nth-child(2) {

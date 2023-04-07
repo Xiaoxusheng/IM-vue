@@ -39,13 +39,8 @@ export default {
     return {
       message: "",
       ws: "",
-
     }
   },
-  created() {
-
-  },
-
   methods: {
     sendmessage() {
       if (this.ws.readyState === 1 || this.$store.state.ws.readyState === 1) {
@@ -64,7 +59,8 @@ export default {
             "room_idently": this.$store.state.user.room_id,
             "message": this.message,
             "room_type": this.$store.state.user.room_type,
-            "message_type": "text"
+            "message_type": "text",
+            "message_time": new Date().toLocaleString()
           }))
         }
         console.log(this.ws.readyState === undefined)
@@ -74,7 +70,8 @@ export default {
             "room_idently": this.$store.state.user.room_id,
             "message": this.message,
             "room_type": this.$store.state.user.room_type,
-            "message_type": "text"
+            "message_type": "text",
+            "message_time": new Date().toLocaleString()
           }))
         }
         this.message = ""
@@ -100,7 +97,6 @@ export default {
         });
       }
       this.ws.onerror = (event) => {
-        setTimeout(this.connect, 1000); // 1秒后重连
         console.log(event);
       }
       this.ws.onmessage = (event) => {
@@ -116,7 +112,7 @@ export default {
         if (this.count > 3) {
           return
         }
-        setTimeout(this.connect, 1000); // 1秒后重连
+        setTimeout(this.connect, 10000); // 1秒后重连
         console.log("close");
       })
     },
