@@ -1,7 +1,7 @@
 <template>
   <div ref="scrollWrapper" class="ws" @scroll="scroll" @wheel="handleWheel">
-    <div v-for="(item,index) in this.$store.state.message" :key="item.message_id">
-      <p>{{ scolltop }}</p>
+    <div v-for="(item,index) in this.$store.state.message" :id="item.message_id" :key="item.message_id" ref="li">
+      <p>{{ item.id }}</p>
       <!-- 自己-->
       <ul v-if="item.on && item.room_idently===$store.state.user.room_id" class="icon—myself">
         <li v-if="item.message_type==='picture'" class="chat-img"><img :src="item.message" alt=""></li>
@@ -58,50 +58,64 @@ export default {
           pageSize: this.$store.state.count
         }
       })
+      //反转
       res.data.data.reverse()
       console.log(res)
       if (res.code === 200) {
+        console.log(res.data.data)
+        if (res.data.data.length === 0) {
+          setTimeout(() => {
+            this.$message({
+              type: "warning",
+              message: "没有更多聊天记录！"
+            })
+          }, 500)
+          return
+        }
         this.$store.commit("addMessage", res.data.data)
       }
     },
     scroll(event) {
       const el = event.target;
-      console.log(this.$refs.scrollWrapper.scrollTop)
-      if (this.$refs.scrollWrapper.scrollTop === 0) {
-        this.getMessage()
-        this.$store.commit("getcount")
-        const lastViewedMessage = chatContainer.querySelector(`[data-message-id="${this.lastViewedMessageId}"]`);
-        if (lastViewedMessage) {
-          chatContainer.scrollTop = lastViewedMessage.offsetTop;
-        }
-      }
-
-
+      // console.log(this.$refs.scrollWrapper.scrollTop,this.$refs.scrollWrapper.scrollHeight)
+      //处于顶部
     },
     handleWheel(e) {
       if (e.deltaY < 0 && this.$refs.scrollWrapper.scrollTop === 0) {
         console.log('鼠标向上滑动')
-
-
+        this.getMessage()
+        this.$store.commit("getcount")
       }
       if (e.deltaY > 0) {
-        console.log('鼠标向下滑动', this.$refs.scrollWrapper.scrollHeight)
+        // console.log('鼠标向下滑动', this.$refs.scrollWrapper.scrollHeight)
       }
     }
-
   },
   mounted() {
     const indently = localStorage.getItem("indently")
+
     if (!indently) {
       this.getinfo()
+    }
+    if (!localStorage.getItem("scrollHeight")) {
+      localStorage.setItem("scrollHeight", 0)
     }
   },
   updated() {
     this.$nextTick(() => {
-      // 将消息列表滚动到最底部
-      this.$refs.scrollWrapper.scrollTop = this.$refs.scrollWrapper.scrollHeight;
-
+      if (this.$store.state.send) {
+        // 将消息列表滚动到最底部
+        this.$refs.scrollWrapper.scrollTop = this.$refs.scrollWrapper.scrollHeight;
+      } else {
+        console.log(this.$refs.scrollWrapper.scrollHeight, JSON.parse(localStorage.getItem("scrollHeight")))
+        this.$refs.scrollWrapper.scrollTop = this.$refs.scrollWrapper.scrollHeight - JSON.parse(localStorage.getItem("scrollHeight"))
+        localStorage.setItem("scrollHeight", this.$refs.scrollWrapper.scrollHeight)
+      }
     });
+
+  },
+  beforeDestroy() {
+    localStorage.setItem("scrollHeight", 0)
   }
 
 }

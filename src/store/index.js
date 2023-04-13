@@ -13,13 +13,9 @@ export default new Vuex.Store({
         friends: [],
         on: "",
         isLoading: false,
-        title: {
-            show: false,
-            message: "",
-            backgroundColor: "#333"
-        },
         ws: "",
         count: 1,
+        send: ""
     },
     getters: {},
     mutations: {
@@ -43,8 +39,7 @@ export default new Vuex.Store({
             messages.forEach(i => {
                 i.on = i.idently === localStorage.getItem("indently")
             })
-            state.message = [...state.message, ...messages]
-            state.message = [...new Set([...state.message, ...messages])];
+            state.message = [...messages, ...state.message]
             console.log(state.message)
 
         },
@@ -63,6 +58,9 @@ export default new Vuex.Store({
         getcount(state) {
             state.count++;
             console.log(state.count)
+        },
+        changsend(state, status) {
+            state.send = status
         }
 
     },

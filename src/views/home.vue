@@ -47,19 +47,26 @@ export default {
   components: {Userinput, Chatheader, Seach, Friendlist},
   data() {
     return {
-      x: 0,
       color: "#409EFF",
-
     }
   },
   methods: {
-    onMousemove(e) {
-      this.x = e.clientX
-    },
     changecolor(e) {
       console.log(e)
       this.$refs.ond.style.background = e
+    },
+    handkeyDown(event) {
+      if (event.ctrlKey && event.keyCode === 90) {
+        console.log(1)
+        this.$router.push("/appendfriends")
+      }
     }
+  },
+  mounted() {
+    window.addEventListener("keydown", this.handkeyDown)
+  },
+  beforeDestroy() {
+    window.removeEventListener("keydown", this.handkeyDown)
   }
 }
 </script>

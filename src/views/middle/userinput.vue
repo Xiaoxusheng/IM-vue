@@ -62,6 +62,7 @@ export default {
             "message_type": "text",
             "message_time": new Date().toLocaleString()
           }))
+          this.$store.commit("changsend", true)
         }
         console.log(this.ws.readyState === undefined)
         if (this.ws.readyState === undefined && this.$store.state.ws.readyState === 1) {
@@ -73,6 +74,7 @@ export default {
             "message_type": "text",
             "message_time": new Date().toLocaleString()
           }))
+          this.$store.commit("changsend", true)
         }
         this.message = ""
       } else {
@@ -156,6 +158,7 @@ export default {
                 "room_type": this.$store.state.user.room_type,
                 "message_type": "picture"
               }))
+              this.$store.commit("changsend", true)
             }
             if (this.ws.readyState === undefined && this.$store.state.ws.readyState === 1) {
               this.$store.state.ws.send(JSON.stringify({
@@ -165,6 +168,7 @@ export default {
                 "room_type": this.$store.state.user.room_type,
                 "message_type": "picture"
               }))
+              this.$store.commit("changsend", true)
             }
           }
         }

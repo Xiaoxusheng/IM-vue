@@ -16,8 +16,8 @@
           <use xlink:href="#icon-MoreSquare"></use>
         </svg>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="SetPicture">设置头像</el-dropdown-item>
-          <el-dropdown-item command="a">狮子头</el-dropdown-item>
+          <el-dropdown-item command="SetPicture">个人资料</el-dropdown-item>
+          <el-dropdown-item command="AddFriends">添加好友</el-dropdown-item>
           <el-dropdown-item command="a">螺蛳粉</el-dropdown-item>
           <el-dropdown-item command="a">双皮奶</el-dropdown-item>
         </el-dropdown-menu>
@@ -52,6 +52,16 @@ export default {
     },
     handleCommand(e) {
       console.log(e)
+      switch (e) {
+        case "AddFriends":
+
+          break
+        case "SetPicture":
+          this.$router.push("/userinfo")
+          break
+
+      }
+
       if (e === "SetPicture") {
         this.$router.push("/userinfo")
       }

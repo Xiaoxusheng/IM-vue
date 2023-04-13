@@ -4,6 +4,7 @@ import Login from '../views/Login/login.vue'
 import Home from "@/views/home";
 import chat from "@/views/middle/chat";
 import userinfo from "@/components/userinfo";
+import appendfriends from "@/components/appendfriends";
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -38,6 +39,12 @@ const routes = [
         path: "/userinfo",
         component: userinfo,
         name: "userinfo",
+
+    },
+    {
+        path: "/appendfriends",
+        component: appendfriends,
+        name: "appendfriends",
 
     }
 
