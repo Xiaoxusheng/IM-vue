@@ -20,7 +20,7 @@
     </div>
     <div id="input-component" class="poper-input">
       <from>
-        <textarea ref="inputs" v-model="message" autofocus name="输入框" @keydown.enter="sendmessage"></textarea>
+        <input ref="inputs" v-model="message" autofocus name="输入框" type="text" @keydown.enter="sendmessage"></input>
       </from>
     </div>
     <div class="builtins">
@@ -120,6 +120,13 @@ export default {
     },
     //发送图片
     setimg() {
+      if (!this.$store.state.user.room_id) {
+        this.$message({
+          type: "error",
+          message: "选择好友！"
+        })
+        return
+      }
       const input = document.createElement('input');
       input.type = 'file';
       input.style.display = 'none';
@@ -127,6 +134,8 @@ export default {
         const file = input.files[0];
         const fileName = file.name; // 获取文件名
         const fileExtension = fileName.split('.').pop(); // 获取文件后缀
+        const picturtypes = ["jpg", "png", "jpeg", "PNG", "JPG", "JPEG",]
+
         if (file) {
           let Picturename = ""
           for (let i = 0; i < 6; i++) {
@@ -143,20 +152,13 @@ export default {
           console.log(res.code)
           console.log('文件上传成功');
           if (res.code === 200) {
-            if (!this.$store.state.user.room_id) {
-              this.$message({
-                type: "error",
-                message: "选择好友！"
-              })
-              return
-            }
             if (this.ws.readyState === 1) {
               this.ws.send(JSON.stringify({
                 "idently": localStorage.getItem("indently"),
                 "room_idently": this.$store.state.user.room_id,
                 "message": res.url,
                 "room_type": this.$store.state.user.room_type,
-                "message_type": "picture"
+                "message_type": picturtypes.includes(fileExtension) ? "picture" : "video"
               }))
               this.$store.commit("changsend", true)
             }
@@ -166,7 +168,7 @@ export default {
                 "room_idently": this.$store.state.user.room_id,
                 "message": res.url,
                 "room_type": this.$store.state.user.room_type,
-                "message_type": "picture"
+                "message_type": picturtypes.includes(fileExtension) ? "picture" : "video"
               }))
               this.$store.commit("changsend", true)
             }
@@ -203,7 +205,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 20%;
-  background-color: cyan;
+  background-color: #F3E9E9F4;
 }
 
 .user-input .change-list .icon_1 {
@@ -224,7 +226,7 @@ export default {
   height: 60%;
 }
 
-.user-input .poper-input textarea {
+.user-input .poper-input input {
   border: none;
   outline: none;
   width: 100%;

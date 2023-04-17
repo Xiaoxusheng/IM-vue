@@ -1,8 +1,9 @@
 <template>
   <div class="chat-header">
     <div class="username">
-      <h5>
+      <h5 v-if="this.$store.state.user.room_type==='private'">
         {{ this.$store.state.user === "" ? this.$store.state.username : this.$store.state.user.userinfo.username }}</h5>
+      <h5 v-else>{{ this.$store.state.user === "" ? this.$store.state.username : this.$store.state.user.info }}</h5>
       <div v-show="this.online">
         <svg aria-hidden="true" class="icon">
           <use xlink:href="#icon-zaixianzhuangtai"></use>
@@ -18,7 +19,7 @@
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="SetPicture">个人资料</el-dropdown-item>
           <el-dropdown-item command="AddFriends">添加好友</el-dropdown-item>
-          <el-dropdown-item command="a">螺蛳粉</el-dropdown-item>
+          <el-dropdown-item v-if="$store.state.user" command="Friends">好友信息</el-dropdown-item>
           <el-dropdown-item command="a">双皮奶</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -54,25 +55,55 @@ export default {
       console.log(e)
       switch (e) {
         case "AddFriends":
-
+          this.open()
+          // this.$router.push("/appendfriends")
           break
         case "SetPicture":
           this.$router.push("/userinfo")
           break
+        case "Friends":
+          this.$router.push("/friends")
 
       }
 
-      if (e === "SetPicture") {
-        this.$router.push("/userinfo")
+
+    },
+    open() {
+      this.$prompt('输入账号', '添加好友', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^\d{10}$/,
+        inputErrorMessage: '格式不正确'
+      }).then(async ({value}) => {
+        const {data: res} = await this.$axios({
+          method: "get",
+          url: "/user/join",
+          params: {
+            account: value
+          }
+        })
+        if (res.code === 200) {
+          this.$message({
+            type: "success",
+            message: "添加成功！"
+          });
+        } else {
+          this.$message.warning({message: res.msg});
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '取消输入'
+        });
+      });
+    },
+    updated() {
+      if (this.$store.state.user !== "") {
+        this.getonline()
       }
     }
-  },
-  updated() {
-    if (this.$store.state.user !== "") {
-      this.getonline()
-    }
+
   }
-
 }
 </script>
 

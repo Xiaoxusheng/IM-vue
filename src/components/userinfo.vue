@@ -74,7 +74,7 @@ export default {
       })
       console.log(res)
       if (res.code === 200) {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         this.userinfo = res.data
       } else {
       }

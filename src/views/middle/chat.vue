@@ -1,10 +1,15 @@
 <template>
   <div ref="scrollWrapper" class="ws" @scroll="scroll" @wheel="handleWheel">
     <div v-for="(item,index) in this.$store.state.message" :id="item.message_id" :key="item.message_id" ref="li">
-      <p>{{ item.id }}</p>
+<!--      <p>{{ item.id }}</p>-->
       <!-- 自己-->
       <ul v-if="item.on && item.room_idently===$store.state.user.room_id" class="icon—myself">
         <li v-if="item.message_type==='picture'" class="chat-img"><img :src="item.message" alt=""></li>
+        <li v-else-if="item.message_type==='video'" class="chat-video">
+          <video controls>
+            <source src="" type="video/webm">
+          </video>
+        </li>
         <li v-else>{{ item.message }}</li>
         <li>
           <el-avatar :src="$store.state.myinfo" shape="square"></el-avatar>
@@ -15,7 +20,12 @@
         <li>
           <el-avatar :size="50" :src="$store.state.user.userinfo.headpicture"></el-avatar>
         </li>
-        <li v-if="item.message_type==='picture'" class="chat-img"><img :src="item.message" alt=""></li>
+        <li v-if="item.message_type==='picture'" class="chat-img"><img :src="item.message" alt="图片"></li>
+        <li v-else-if="item.message_type==='video'" class="chat-video">
+          <video controls>
+            <source src="" type="video/webm">
+          </video>
+        </li>
         <li v-else>{{ item.message }}</li>
       </ul>
     </div>
@@ -93,7 +103,6 @@ export default {
   },
   mounted() {
     const indently = localStorage.getItem("indently")
-
     if (!indently) {
       this.getinfo()
     }
@@ -162,11 +171,11 @@ export default {
 }
 
 .ws .icon—myself .chat-img {
-  padding: 20px;
+  /*padding: 20px;*/
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 10vw;
+  width: 15vw;
   max-width: 20vm;
   height: 20vh;
   max-height: 30vh;
@@ -177,7 +186,29 @@ export default {
 .ws .icon—myself .chat-img img {
   max-width: 100%;
   height: 100%;
+  padding: 0;
   object-fit: cover;
+}
+
+.ws .icon—myself .chat-video {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20vw;
+  max-width: 20vm;
+  height: 20vh;
+  max-height: 30vh;
+  border-radius: 10px;
+  border: #333333 1px solid;
+}
+
+.ws .icon—myself .chat-video video {
+  width: 20vw;
+  max-width: 20vm;
+  height: 20vh;
+  max-height: 30vh;
+  padding: 0;
 }
 
 .ws .icon—myself li:nth-child(1) {
@@ -187,8 +218,9 @@ export default {
 }
 
 .ws .icon—other {
-  padding: 0;
   margin: 0;
+  margin-top: 10px;
+  padding: 0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -205,13 +237,13 @@ export default {
 }
 
 .ws .icon—other .chat-img {
-  padding: 20px;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 10vw;
+  max-width: 15vw;
   height: 20vh;
-  border-radius: 20px;
+  border-radius: 10px;
   border: #333333 1px solid;
 }
 
@@ -219,6 +251,28 @@ export default {
   max-width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+
+.ws .icon—other .chat-video {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20vw;
+  max-width: 20vm;
+  height: 20vh;
+  max-height: 30vh;
+  border-radius: 10px;
+  border: #333333 1px solid;
+}
+
+.ws .icon—other .chat-video video {
+  width: 20vw;
+  max-width: 20vm;
+  height: 20vh;
+  max-height: 30vh;
+  padding: 0;
 }
 
 .ws .icon—other li:nth-child(2) {

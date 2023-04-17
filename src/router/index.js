@@ -5,6 +5,7 @@ import Home from "@/views/home";
 import chat from "@/views/middle/chat";
 import userinfo from "@/components/userinfo";
 import appendfriends from "@/components/appendfriends";
+import friends from "@/views/friends/friends";
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -46,6 +47,11 @@ const routes = [
         component: appendfriends,
         name: "appendfriends",
 
+    },
+    {
+        path: "/friends",
+        component: friends,
+        name: "friends",
     }
 
     // {

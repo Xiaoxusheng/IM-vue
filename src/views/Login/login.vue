@@ -157,6 +157,10 @@ export default {
           username: this.ruleForm.username,
         }
       })
+      if (res.code === 1) {
+        this.$message.warning(res.msg)
+        return
+      }
       this.title = 60
       const tim = window.setInterval(() => {
         if (this.title > 0) {

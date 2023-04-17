@@ -24,7 +24,6 @@
           <router-view></router-view>
         </div>
         <Userinput></Userinput>
-
       </div>
       <div class="arrow-right">
         <svg aria-hidden="true" class="#icon-nosignal">
@@ -41,15 +40,18 @@ import Seach from "@/views/left/seach";
 import Friendlist from "@/views/left/friendlist";
 import Chatheader from "@/views/middle/chatheader";
 import Userinput from "@/views/middle/userinput";
+import Input from "@/views/middle/userinput";
 
 export default {
   name: "home",
-  components: {Userinput, Chatheader, Seach, Friendlist},
+  components: {Input, Userinput, Chatheader, Seach, Friendlist},
   data() {
     return {
       color: "#409EFF",
+      time: new Date().toLocaleDateString()
     }
   },
+
   methods: {
     changecolor(e) {
       console.log(e)
@@ -57,7 +59,6 @@ export default {
     },
     handkeyDown(event) {
       if (event.ctrlKey && event.keyCode === 90) {
-        console.log(1)
         this.$router.push("/appendfriends")
       }
     }

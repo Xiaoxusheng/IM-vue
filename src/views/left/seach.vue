@@ -1,7 +1,7 @@
 <template>
   <div class="icon-Searchs">
     <div class="grid-content ">
-      <input v-model="input" type="text" @input="querySearchAsync">
+      <input v-model="input" type="search" @input="querySearchAsync">
     </div>
     <div class="grid-content ">
       <button class="el-buttons" @click="querySearchAsync">搜索</button>

@@ -4,12 +4,15 @@
     <!-- 好友列表   -->
     <!-- 你的内容 -->
     <div ref="chatContainer" class="frist">
-      <div v-for="(item,index) in friends" :key="item.Indently" ref="friends" class="icon_lists" @click="check(index)">
-          <span class="imgs">
+      <div v-for="(item,index) in friends" :key="index" ref="friends" class="icon_lists" @click="check(index)">
+          <span v-if=" item.room_type==='private'" class="imgs">
             <el-avatar :src="item.userinfo.headpicture" class="img" shape="square"></el-avatar>
           </span>
+        <span v-else class="imgs">
+            <el-avatar class="img" shape="square" src=""></el-avatar>
+        </span>
         <span>
-            {{ item.userinfo.username }}
+            {{ item.userinfo ? item.userinfo.username : item.info }}
           </span>
 
         <span>
@@ -20,7 +23,6 @@
       </div>
 
     </div>
-
   </div>
 </template>
 
@@ -37,14 +39,54 @@ export default {
   },
   methods: {
     async getuserinfo() {
+      // this.$axios.all([
+      //   this.$axios({
+      //     method: "get",
+      //     url: "/user/friend_list"
+      //   }),
+      //   this.$axios({
+      //     method: "get",
+      //     url: "/group/grouperlist"
+      //   })
+      // ]).then(this.$axios.spread((postResponse, commentResponse) => {
+      //   console.log('Post:', postResponse.data);
+      //   this.$store.commit("getfriends", postResponse.data.data)
+      //   console.log('Comments:', commentResponse.data);
+      //   this.$store.commit("getfriends",  commentResponse.data.data)
+      // }))
+      //     .catch(error => {
+      //       console.log(error);
+      //       this.$message({
+      //         type: "error",
+      //         message: error
+      //       })
+      //     });
+
+
       const {data: res} = await this.$axios({
+        method: "get",
+        url: "/group/grouperlist"
+      })
+      if (res.code === 200) {
+        console.log(this.friends)
+        this.friends = res.data.data
+        this.$store.commit("getfriends", res.data.data)
+        console.log(this.friends)
+      } else {
+        this.$message({
+          type: "error",
+          message: res.msg
+        })
+      }
+      const {data: res1} = await this.$axios({
         method: "get",
         url: "/user/friend_list"
       })
-      console.log(res)
-      if (res.code === 200) {
-        this.friends = res.data.data
-        this.$store.commit("getfriends", res.data.data)
+      if (res1.code === 200) {
+
+        this.friends = this.friends.concat(res1.data.data)
+        this.$store.commit("getfriends", res1.data.data)
+        console.log(this.friends)
       } else {
         this.$message({
           type: "error",
@@ -57,7 +99,7 @@ export default {
       this.$router.push({
         name: "chat",
         params: {
-          username: this.friends[e].userinfo.username
+          username: this.friends[e].room_type === 'private' ? this.friends[e].userinfo.username : this.friends[e].info
         }
       })
       for (let i = 0; i < this.friends.length; i++) {
