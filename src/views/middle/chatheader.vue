@@ -69,7 +69,7 @@ export default {
 
     },
     open() {
-      this.$prompt('输入账号', '添加好友', {
+      this.$prompt('输入账号', '添加好友或群组', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPattern: /^\d{10}$/,

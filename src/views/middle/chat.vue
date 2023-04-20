@@ -3,7 +3,8 @@
     <div v-for="(item,index) in this.$store.state.message" :id="item.message_id" :key="item.message_id" ref="li">
 <!--      <p>{{ item.id }}</p>-->
       <!-- 自己-->
-      <ul v-if="item.on && item.room_idently===$store.state.user.room_id" class="icon—myself">
+      <ul v-if="item.on && item.room_idently===$store.state.user.room_id" class="icon—myself"
+          @click="check(item.message_id)">
         <li v-if="item.message_type==='picture'" class="chat-img"><img :src="item.message" alt=""></li>
         <li v-else-if="item.message_type==='video'" class="chat-video">
           <video controls>
@@ -99,6 +100,9 @@ export default {
       if (e.deltaY > 0) {
         // console.log('鼠标向下滑动', this.$refs.scrollWrapper.scrollHeight)
       }
+    },
+    check(e) {
+      console.log(e)
     }
   },
   mounted() {
@@ -155,13 +159,13 @@ export default {
 .ws .icon—myself {
   padding: 0;
   margin: 0;
+  margin-top: 10px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   width: 100%;
   min-height: 10%;
   list-style: none;
-
 }
 
 .ws .icon—myself li {
