@@ -13,8 +13,8 @@
         </span>
         <span>
             {{ item.userinfo ? item.userinfo.username : item.info }}
-          </span>
-
+        </span>
+        <span>{{ item.roomidently }}</span>
         <span>
            <svg aria-hidden="true" class="icon">
           <use xlink:href="#icon-zaixianzhuangtai"></use>
@@ -106,7 +106,7 @@ export default {
         this.$refs.friends[i].style.background = ""
         this.$refs.friends[i].style.color = ""
       }
-      this.$refs.friends[e].style.background = "#c08552"
+      this.$refs.friends[e].style.background = "#35a96e;"
       this.$refs.friends[e].style.color = "#ffffff"
     },
   },
@@ -144,7 +144,7 @@ export default {
   align-content: flex-start;
   flex-wrap: wrap;
   min-width: 100%;
-  height: 95%;
+  height: 84%;
   color: #606266;
 }
 
@@ -163,25 +163,25 @@ export default {
 .el-listfrien .frist {
   /*overflow-x:hidden ;*/
   /*border-radius: 10px;*/
+  background-image: linear-gradient(to right, #38ab71, rgba(246, 235, 233, 0.96));
   backdrop-filter: blur(1px);
-  padding: 0;
+  padding: 20px;
   margin: 0;
   width: 100%;
   height: 100%;
 }
 
 .el-listfrien .frist .icon_lists {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .2), 0 0 6px rgba(0, 0, 0, .04);
   display: flex;
   align-items: center;
   justify-content: flex-start;
   height: 10%;
-  background-color: #fff;
+  background-image: linear-gradient(to right, #35a96e, rgba(243, 233, 233, 0.96));
   list-style: none;
 }
 
 .el-listfrien .frist .icon_lists .imgs {
-
   width: 130px;
   height: 40px;
 }

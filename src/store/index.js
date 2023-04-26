@@ -15,7 +15,9 @@ export default new Vuex.Store({
         isLoading: false,
         ws: "",
         count: 1,
-        send: ""
+        send: "",
+        alltop: false,
+        show: false
     },
     getters: {},
     mutations: {

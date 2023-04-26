@@ -205,7 +205,8 @@ export default {
   align-items: center;
   width: 100%;
   height: 20%;
-  background-color: #F3E9E9F4;
+  background-image: linear-gradient(to right, #35a96e, #8ef6cb, rgba(243, 233, 233, 0.96));
+
 }
 
 .user-input .change-list .icon_1 {
@@ -254,7 +255,7 @@ export default {
   width: 65px;
   height: 100%;
   border: 0;
-  background: rgba(255, 255, 255, 0);
+  background-image: linear-gradient(to right, #35a96e, #8ef6cb, rgba(243, 233, 233, 0.96));
   /*border-radius: 10px;*/
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(5px);

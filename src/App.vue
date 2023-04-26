@@ -2,19 +2,20 @@
   <div id="app">
     <!--    <h1>我是app</h1>-->
     <loadings v-show="$store.state.isLoading"></loadings>
-    <router-view></router-view>
 
+    <router-view></router-view>
+    <AddFriends :visible="$store.state.show"></AddFriends>
   </div>
 </template>
 
-<!--<script src="../src/assets/font_sl3lmg4aoba/iconfont.js"></script>-->
 <script>
 import loadings from "./components/loading"
+import AddFriends from "./components/appendfriends"
 
 export default {
   name: 'App',
   components: {
-    loadings,
+    loadings, AddFriends
   },
   data() {
     return {}

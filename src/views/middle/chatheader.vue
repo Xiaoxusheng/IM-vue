@@ -19,7 +19,8 @@
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="SetPicture">个人资料</el-dropdown-item>
           <el-dropdown-item command="AddFriends">添加好友</el-dropdown-item>
-          <el-dropdown-item v-if="$store.state.user" command="Friends">好友信息</el-dropdown-item>
+          <el-dropdown-item v-if="$store.state.user&&$store.state.user.room_type==='private'" command="Friends">好友信息
+          </el-dropdown-item>
           <el-dropdown-item command="a">双皮奶</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -31,13 +32,12 @@
 
 <script>
 
-
 export default {
   name: "chatheader",
   data() {
     return {
       username: "小米",
-      online: false
+      online: false,
     }
   },
   methods: {
@@ -69,33 +69,35 @@ export default {
 
     },
     open() {
-      this.$prompt('输入账号', '添加好友或群组', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        inputPattern: /^\d{10}$/,
-        inputErrorMessage: '格式不正确'
-      }).then(async ({value}) => {
-        const {data: res} = await this.$axios({
-          method: "get",
-          url: "/user/join",
-          params: {
-            account: value
-          }
-        })
-        if (res.code === 200) {
-          this.$message({
-            type: "success",
-            message: "添加成功！"
-          });
-        } else {
-          this.$message.warning({message: res.msg});
-        }
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '取消输入'
-        });
-      });
+      this.$store.state.show = true
+      // this.$prompt('输入账号', '添加好友或群组', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消',
+      //   inputPattern: /^\d{10}$/,
+      //   inputErrorMessage: '格式不正确',
+      // }).then(async ({value}) => {
+      //   const {data: res} = await this.$axios({
+      //     method: "get",
+      //     url: "/user/join",
+      //     params: {
+      //       account: value
+      //     }
+      //   })
+      //   if (res.code === 200) {
+      //     this.$message({
+      //       type: "success",
+      //       message: "添加成功！"
+      //     });
+      //   } else {
+      //     this.$message.warning({message: res.msg});
+      //   }
+      // }).catch(() => {
+      //   this.$message({
+      //     type: 'info',
+      //     message: '取消输入'
+      //   });
+      // });
+
     },
     updated() {
       if (this.$store.state.user !== "") {

@@ -1,4 +1,4 @@
-module.exports.debounce = (fn, delay) => {
+export function debounce(fn, delay) {
     let timer = null;
     return function () {
         clearTimeout(timer);

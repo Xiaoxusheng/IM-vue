@@ -50,6 +50,7 @@ export default {
       })
       console.log(res)
       if (res.code === 200) {
+
         // this.$store.commit("getinfo", (res.data.data))
         localStorage.setItem("indently", res.data.data.indently)
         localStorage.setItem("headpicture", res.data.data.headpicture)
@@ -71,10 +72,10 @@ export default {
       })
       //反转
       res.data.data.reverse()
-      console.log(res)
       if (res.code === 200) {
         console.log(res.data.data)
         if (res.data.data.length === 0) {
+          this.$store.state.alltop = true
           setTimeout(() => {
             this.$message({
               type: "warning",
@@ -93,12 +94,12 @@ export default {
     },
     handleWheel(e) {
       if (e.deltaY < 0 && this.$refs.scrollWrapper.scrollTop === 0) {
+        if (this.$store.state.alltop) {
+          return
+        }
         console.log('鼠标向上滑动')
         this.getMessage()
         this.$store.commit("getcount")
-      }
-      if (e.deltaY > 0) {
-        // console.log('鼠标向下滑动', this.$refs.scrollWrapper.scrollHeight)
       }
     },
     check(e) {
@@ -143,6 +144,8 @@ export default {
   overflow-y: scroll;
   height: 100%;
   width: 100%;
+  background: url("/src/assets/login1.jpg") no-repeat;
+  background-size: cover;
 }
 
 ::-webkit-scrollbar {
@@ -188,7 +191,7 @@ export default {
 }
 
 .ws .icon—myself .chat-img img {
-  max-width: 100%;
+  width: 100%;
   height: 100%;
   padding: 0;
   object-fit: cover;
@@ -216,9 +219,12 @@ export default {
 }
 
 .ws .icon—myself li:nth-child(1) {
-  background-color: #333;
+  background-color: #fc8c04;
   color: #fffdef;
-  border-radius: 25px;
+  padding: 10px;
+  min-height: 20px;
+  min-width: 40px;
+  border-radius: 10px;
 }
 
 .ws .icon—other {
@@ -280,8 +286,11 @@ export default {
 }
 
 .ws .icon—other li:nth-child(2) {
-  background-color: #333;
+  background-color: #fc8c04;
+  min-height: 20px;
+  min-width: 40px;
   color: #fffdef;
-  border-radius: 25px;
+  border-radius: 10px;
+  padding: 10px;
 }
 </style>
