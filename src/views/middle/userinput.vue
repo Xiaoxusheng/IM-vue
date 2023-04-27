@@ -258,8 +258,7 @@ export default {
   background-image: linear-gradient(to right, #35a96e, #8ef6cb, rgba(243, 233, 233, 0.96));
   /*border-radius: 10px;*/
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(5px);
-
+  display: inline-block;
 }
 
 </style>

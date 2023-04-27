@@ -6,15 +6,15 @@
       <div class="modal-body">
         <form @submit.prevent=" rule">
           <div class="form-group">
-            <label for="name">好友账号或者群号：</label>
-            <input id="name" v-model="account" required type="text">
+            <label for="name" style="font-size: 16px">账号</label>
+            <input id="name" v-model.trim="account" required type="text">
           </div>
           <div class="form-group">
             <label for="name">类型</label>
             <input id="email1" v-model="check" required type="radio" value="1">群聊
             <input id="email2" v-model="check" required type="radio" value="2">好友
           </div>
-          <p>{{ msg }}</p>
+          <p class="chat-p">{{ msg }}</p>
           <div class="form-group">
             <button type="submit">发送添加好友请求</button>
             <button type="button" @click="close">取消</button>
@@ -35,9 +35,8 @@ export default {
     },
     title: {
       type: String,
-      default: '添加好友',
-      msg: ""
-    }
+      required: true
+    },
   },
   data() {
     return {
@@ -67,7 +66,7 @@ export default {
     },
 
     async submit() {
-      if (this.check === "1") {
+      if (this.check === "2") {
         const {data: res} = await this.$axios({
           method: "get",
           url: "/user/join",
@@ -88,7 +87,7 @@ export default {
           method: "get",
           url: "/group/join",
           params: {
-            account: this.account
+            room_id: this.account
           }
         })
         if (res.code === 200) {
@@ -135,14 +134,14 @@ export default {
 
 .modal-container {
   width: 500px;
-  background-color: #fff;
+  background-color: #fffdef;
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   z-index: 999;
 }
 
-p {
+.chat-p {
   color: red;
 }
 
@@ -180,7 +179,7 @@ textarea {
   outline: none;
 }
 
-button {
+.form-group button {
   padding: 10px 20px;
   margin-right: 10px;
   border: none;
@@ -191,13 +190,12 @@ button {
   outline: none;
 }
 
-button[type="submit"] {
-
+.form-group button[type="submit"] {
   background-color: #4caf50;
   color: #fff;
 }
 
-button[type="button"] {
+.form-group button[type="button"] {
   background-color: #ccc;
   color: #fff;
 }

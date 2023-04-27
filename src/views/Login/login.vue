@@ -174,7 +174,7 @@ export default {
     },
   },
   updated() {
-    console.log(this.radio)
+    // console.log(this.radio)
   },
   mounted() {
     // 页面加载时从localStorage或者cookie中读取记住密码信息

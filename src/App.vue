@@ -4,7 +4,7 @@
     <loadings v-show="$store.state.isLoading"></loadings>
 
     <router-view></router-view>
-    <AddFriends :visible="$store.state.show"></AddFriends>
+    <AddFriends :title="$store.state.title" :visible="$store.state.show"></AddFriends>
   </div>
 </template>
 

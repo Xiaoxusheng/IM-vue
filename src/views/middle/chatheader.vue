@@ -21,7 +21,11 @@
           <el-dropdown-item command="AddFriends">添加好友</el-dropdown-item>
           <el-dropdown-item v-if="$store.state.user&&$store.state.user.room_type==='private'" command="Friends">好友信息
           </el-dropdown-item>
-          <el-dropdown-item command="a">双皮奶</el-dropdown-item>
+          <!--      退出    -->
+          <el-dropdown-item v-if="$store.state.user&&$store.state.user.room_type==='private'" command="delete">删除好友
+          </el-dropdown-item>
+          <el-dropdown-item v-else-if="$store.state.user&&$store.state.user.room_type==='group'" command="delete">退出群聊
+          </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
 
@@ -56,52 +60,73 @@ export default {
       switch (e) {
         case "AddFriends":
           this.open()
-          // this.$router.push("/appendfriends")
           break
         case "SetPicture":
           this.$router.push("/userinfo")
           break
         case "Friends":
           this.$router.push("/friends")
-
+          break;
+        case "delete":
+          this.delete()
+          break;
       }
 
 
     },
     open() {
       this.$store.state.show = true
-      // this.$prompt('输入账号', '添加好友或群组', {
-      //   confirmButtonText: '确定',
-      //   cancelButtonText: '取消',
-      //   inputPattern: /^\d{10}$/,
-      //   inputErrorMessage: '格式不正确',
-      // }).then(async ({value}) => {
-      //   const {data: res} = await this.$axios({
-      //     method: "get",
-      //     url: "/user/join",
-      //     params: {
-      //       account: value
-      //     }
-      //   })
-      //   if (res.code === 200) {
-      //     this.$message({
-      //       type: "success",
-      //       message: "添加成功！"
-      //     });
-      //   } else {
-      //     this.$message.warning({message: res.msg});
-      //   }
-      // }).catch(() => {
-      //   this.$message({
-      //     type: 'info',
-      //     message: '取消输入'
-      //   });
-      // });
+      this.$store.state.title = "添加好友"
+    },
+    async delete() {
+      this.$confirm('退出群聊, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        const code = await this.deleteaccount()
+        console.log(code)
+        if (code) {
+          this.$message.success("删除成功")
+        } else {
+          this.$message.warning("删除失败")
+        }
 
+      }).catch((e) => {
+        console.log(e)
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     },
     updated() {
       if (this.$store.state.user !== "") {
         this.getonline()
+      }
+    },
+    async deleteaccount() {
+      console.log(this.$store.state.user)
+      if (this.$store.state.user && this.$store.state.user.room_type === 'private') {
+        const {data: res} = await this.$axios({
+          method: "get",
+          url: "/user/delete",
+          params: {
+            account: this.$store.state.user.userinfo.account
+          }
+        })
+        return res.code === 200;
+
+      } else {
+        console.log(this.$store.state.user.roomidently)
+        const {data: res} = await this.$axios({
+          method: "get",
+          url: "/group/exit",
+          params: {
+            account: this.$store.state.user.roomidently
+          }
+        })
+        return res.code === 200;
       }
     }
 

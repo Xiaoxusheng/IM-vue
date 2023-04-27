@@ -32,6 +32,10 @@ const routes = [
                 component: chat,
                 name: "chat",
             },
+            // {
+            //     path: '/',
+            //     redirect: "/0",
+            // }
 
 
         ]

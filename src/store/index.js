@@ -17,7 +17,8 @@ export default new Vuex.Store({
         count: 1,
         send: "",
         alltop: false,
-        show: false
+        show: false,
+        title: ""
     },
     getters: {},
     mutations: {
