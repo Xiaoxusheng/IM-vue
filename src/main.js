@@ -17,18 +17,15 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 
 
-
-
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-axios.defaults.baseURL = 'http://127.0.0.1:8080';
+axios.defaults.baseURL = 'http://116.198.44.154:8080';
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
     const list = ["user/login", "/user/send_code"]
     // 在发送请求之前做些什么
     if (!list.includes(config.url)) {
         // config.headers=localStorage.getItem("token")
-
         config.headers.token = `${localStorage.getItem("token")}`
     }
 
@@ -53,11 +50,12 @@ axios.interceptors.response.use(function (response) {
 
 }, function (error) {
     // 超出 2xx 范围的状态码都会触发该函数。
-
     // 对响应错误做点什么
     return Promise.reject(error);
 });
 
+console.log = () => {
+};
 
 new Vue({
     router,
