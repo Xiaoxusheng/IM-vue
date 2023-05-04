@@ -87,7 +87,7 @@ export default {
     },
     connect() {
       // 创建ws
-      this.ws = new WebSocket('ws://127.0.0.1:8080/user/websocket?token=' + `${localStorage.getItem("token")}`);
+      this.ws = new WebSocket('ws://127.0.0.1:8080/websocket?token=' + `${localStorage.getItem("token")}`);
       this.$store.commit("getws", this.ws)
       this.ws.onopen = () => {
         console.log('WebSocket连接成功');

@@ -5,16 +5,17 @@
     <!-- 你的内容 -->
     <div ref="chatContainer" class="frist">
       <div v-for="(item,index) in friends" :key="index" ref="friends" class="icon_lists" @click="check(index)">
+<!--        个人-->
           <span v-if=" item.room_type==='private'" class="imgs">
             <el-avatar :src="item.userinfo.headpicture" class="img" shape="square"></el-avatar>
           </span>
+        <!--        群聊-->
         <span v-else class="imgs">
             <el-avatar class="img" shape="square" src=""></el-avatar>
         </span>
         <span>
-            {{ item.userinfo ? item.userinfo.username : item.info }}
+            {{ item.userinfo.username ? item.userinfo.username : item.userinfo.info }}
         </span>
-        <span>{{ item.roomidently }}</span>
         <span>
            <svg aria-hidden="true" class="icon">
           <use xlink:href="#icon-zaixianzhuangtai"></use>
@@ -39,37 +40,12 @@ export default {
   },
   methods: {
     async getuserinfo() {
-      // this.$axios.all([
-      //   this.$axios({
-      //     method: "get",
-      //     url: "/user/friend_list"
-      //   }),
-      //   this.$axios({
-      //     method: "get",
-      //     url: "/group/grouperlist"
-      //   })
-      // ]).then(this.$axios.spread((postResponse, commentResponse) => {
-      //   console.log('Post:', postResponse.data);
-      //   this.$store.commit("getfriends", postResponse.data.data)
-      //   console.log('Comments:', commentResponse.data);
-      //   this.$store.commit("getfriends",  commentResponse.data.data)
-      // }))
-      //     .catch(error => {
-      //       console.log(error);
-      //       this.$message({
-      //         type: "error",
-      //         message: error
-      //       })
-      //     });
-
-
       const {data: res} = await this.$axios({
         method: "get",
         url: "/group/grouperlist"
       })
       if (res.code === 200) {
-        console.log(this.friends)
-        this.friends = res.data.data
+        this.friends.push(res.data.data)
         this.$store.commit("getfriends", res.data.data)
         console.log(this.friends)
       } else {
@@ -83,8 +59,10 @@ export default {
         url: "/user/friend_list"
       })
       if (res1.code === 200) {
-
-        this.friends = this.friends.concat(res1.data.data)
+        for (let i = 0; i < res1.data.data.length; i++) {
+          this.friends.push(res1.data.data[i])
+        }
+        console.log(res1.data.data)
         this.$store.commit("getfriends", res1.data.data)
         console.log(this.friends)
       } else {

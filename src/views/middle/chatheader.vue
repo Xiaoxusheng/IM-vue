@@ -79,7 +79,8 @@ export default {
       this.$store.state.title = "添加好友"
     },
     async delete() {
-      this.$confirm('退出群聊, 是否继续?', '提示', {
+      let title = this.$store.state.user.room_type === 'private' ? '删除好友' : '退出群聊'
+      this.$confirm(`${title}, 是否继续?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

@@ -19,8 +19,9 @@ Vue.prototype.$axios = axios
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-axios.defaults.baseURL = 'http://116.198.44.154:8080';
+// axios.defaults.baseURL = 'http://116.198.44.154:8080';
 // 添加请求拦截器
+axios.defaults.baseURL = "http://127.0.0.1:8080"
 axios.interceptors.request.use(function (config) {
     const list = ["user/login", "/user/send_code"]
     // 在发送请求之前做些什么
@@ -54,8 +55,8 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
-console.log = () => {
-};
+// console.log = () => {
+// };
 
 new Vue({
     router,
