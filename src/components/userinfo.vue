@@ -122,21 +122,32 @@ export default {
       })
     },
     copys(e) {
-      navigator.clipboard.writeText(this.userinfo.data.account)
-          .then(() => {
-            this.$notify({
-              type: "success",
-              message: "复制成功！",
-              title: "复制"
-            })
-          })
-          .catch(() => {
-            this.$notify({
-              type: "error",
-              message: "复制失败！",
-              title: "不准复制"
-            })
-          })
+      const input = document.createElement('input')
+      input.setAttribute('value', this.userinfo.data.account)
+      document.body.appendChild(input)
+      input.select()
+      document.execCommand('copy')
+      document.body.removeChild(input)
+      this.$notify({
+        type: "success",
+        message: "复制成功！",
+        title: "复制"
+      })
+      // navigator.clipboard.writeText(this.userinfo.data.account)
+      //     .then(() => {
+      //       this.$notify({
+      //         type: "success",
+      //         message: "复制成功！",
+      //         title: "复制"
+      //       })
+      //     })
+      //     .catch(() => {
+      //       this.$notify({
+      //         type: "error",
+      //         message: "复制失败！",
+      //         title: "不准复制"
+      //       })
+      //     })
     }
 
   },
