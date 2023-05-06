@@ -40,20 +40,6 @@ export default {
   },
   methods: {
     async getuserinfo() {
-      const {data: res} = await this.$axios({
-        method: "get",
-        url: "/group/grouperlist"
-      })
-      if (res.code === 200) {
-        this.friends.push(res.data.data)
-        this.$store.commit("getfriends", res.data.data)
-        console.log(this.friends)
-      } else {
-        this.$message({
-          type: "error",
-          message: res.msg
-        })
-      }
       const {data: res1} = await this.$axios({
         method: "get",
         url: "/user/friend_list"
@@ -64,6 +50,20 @@ export default {
         }
         console.log(res1.data.data)
         this.$store.commit("getfriends", res1.data.data)
+        console.log(this.friends)
+      } else {
+        this.$message({
+          type: "error",
+          message: res.msg
+        })
+      }
+      const {data: res} = await this.$axios({
+        method: "get",
+        url: "/group/grouperlist"
+      })
+      if (res.code === 200) {
+        this.friends.push(res.data.data)
+        this.$store.commit("getfriends", res.data.data)
         console.log(this.friends)
       } else {
         this.$message({

@@ -56,10 +56,12 @@ export default {
 
   methods: {
     rule() {
-      if (this.check && this.account.length === 7 && /^\d+$/.test(this.account)) {
+      if (this.check && (this.account.length === 7 || this.account.length === 10) && /^\d+$/.test(this.account)) {
         this.submit()
-      } else if (this.account.length !== 7) {
+      } else if (this.check === "1" && this.account.length !== 7) {
         this.msg = "账号长度为7位"
+      } else if (this.check === "2" && this.account.length !== 10) {
+        this.msg = "账号长度为10位"
       } else if (!/^\d+$/.test(this.account)) {
         this.msg = "账号类型为数字"
       }

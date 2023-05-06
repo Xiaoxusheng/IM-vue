@@ -99,9 +99,9 @@ export default {
         let fomData = new FormData()
         fomData.append("HeadPicture", file)
         const {data: res} = await this.$axios({
-          method: post,
+          method: "post",
           url: "/user/SetHeadPicture",
-          data: {fomData}
+          data: fomData
         })
         if (res.code === 200) {
           this.$message({
