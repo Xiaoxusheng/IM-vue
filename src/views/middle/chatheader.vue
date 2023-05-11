@@ -66,6 +66,7 @@ export default {
           break
         case "Friends":
           this.$router.push("/friends")
+
           break;
         case "delete":
           this.delete()

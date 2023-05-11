@@ -60,10 +60,27 @@ export default {
     }
   },
   mounted() {
-    this.userinfo = this.$store.state.user
-    this.time = Math.floor(((new Date() - new Date("2023-03-12 19:07:16").getTime()) / 1000 / 60 / 60 / 24)) + "天"
+    this.userinfo = JSON.parse(localStorage.getItem("userinfo"))
+    // console.log(  this.userinfo==="", this.userinfo)
+    if (this.userinfo === "") {
+      localStorage.setItem("userinfo", JSON.stringify(this.$store.state.user))
+      this.userinfo = this.$store.state.user
+    }
+
+    this.time = Math.floor(((new Date() - new Date(this.userinfo.userinfo.register_time).getTime()) / 1000 / 60 / 60 / 24)) + "天"
     // console.log((Math.floor((new Date() - new Date("2023-03-12 19:07:16").getTime())/1000/60/60/24)))
-  }
+  },
+  // created() {
+  //   this.userinfo = this.$store.state.user
+  //   // console.log(this.userinfo.userinfo.register_time)
+  //   // this.userinfo =localStorage.getItem("userinfo")
+  //   // if (!this.userinfo ){
+  //   //   localStorage.setItem("userinfo", this.$store.state.user)
+  //   // }
+  //   this.time = Math.floor(((new Date() - new Date(this.userinfo.userinfo.register_time).getTime()) / 1000 / 60 / 60 / 24)) + "天"
+  // }
+
+
 }
 </script>
 
