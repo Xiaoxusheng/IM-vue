@@ -3,7 +3,9 @@
     <div class="username">
       <h5 v-if="this.$store.state.user.room_type==='private'">
         {{ this.$store.state.user === "" ? this.$store.state.username : this.$store.state.user.userinfo.username }}</h5>
-      <h5 v-else>{{ this.$store.state.user === "" ? this.$store.state.username : this.$store.state.user.info }}</h5>
+      <h5 v-else>{{
+          this.$store.state.user === "" ? this.$store.state.username : this.$store.state.user.userinfo.info
+        }} </h5>
       <div v-show="this.online">
         <svg aria-hidden="true" class="icon">
           <use xlink:href="#icon-zaixianzhuangtai"></use>
@@ -53,7 +55,7 @@ export default {
           account: this.$store.state.user.userinfo.account
         }
       })
-      this.online = !!res.status;
+      this.online = res.status;
     },
     handleCommand(e) {
       console.log(e)
@@ -66,14 +68,11 @@ export default {
           break
         case "Friends":
           this.$router.push("/friends")
-
           break;
         case "delete":
           this.delete()
           break;
       }
-
-
     },
     open() {
       this.$store.state.show = true
@@ -102,13 +101,8 @@ export default {
         });
       });
     },
-    updated() {
-      if (this.$store.state.user !== "") {
-        this.getonline()
-      }
-    },
     async deleteaccount() {
-      console.log(this.$store.state.user)
+      // console.log(this.$store.state.user)
       if (this.$store.state.user && this.$store.state.user.room_type === 'private') {
         const {data: res} = await this.$axios({
           method: "get",
@@ -118,7 +112,6 @@ export default {
           }
         })
         return res.code === 200;
-
       } else {
         console.log(this.$store.state.user.roomidently)
         const {data: res} = await this.$axios({
@@ -132,7 +125,12 @@ export default {
       }
     }
 
-  }
+  },
+  updated() {
+    if (this.$store.state.user !== "") {
+      this.getonline()
+    }
+  },
 }
 </script>
 
